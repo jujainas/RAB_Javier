@@ -1,4 +1,9 @@
-﻿namespace RAB_Javier
+﻿using Autodesk.Revit.DB.Mechanical;
+using Autodesk.Revit.Exceptions;
+using Autodesk.Revit.DB.Plumbing;
+using System.Windows.Controls;
+
+namespace RAB_Javier
 {
     [Transaction(TransactionMode.Manual)]
     public class cmdSkills02 : IExternalCommand
@@ -75,7 +80,7 @@
 
                 CurveElement curveElem = modelCurves[0];
                 Curve curCurve = curveElem.GeometryCurve;
-                Curve curCurve2 = modelCurves[0].GeometryCurve;
+                //Curve curCurve = modelCurves[0].GeometryCurve;
 
                 Wall newWall = Wall.Create(doc, curCurve, newLevel.Id, false);
 
@@ -86,9 +91,36 @@
                 wallTypes.OfCategory(BuiltInCategory.OST_Walls);
                 wallTypes.WhereElementIsElementType(); */
 
-                Curve curCurve3 = modelCurves[1].GeometryCurve;
-                Wall newWall2 = Wall.Create(doc, curCurve3, wallTypes.FirstElementId(), newLevel.Id, 20, 0, false, false);
-                
+                Curve curCurve2 = modelCurves[1].GeometryCurve;
+                Wall newWall2 = Wall.Create(doc, curCurve2, wallTypes.FirstElementId(), newLevel.Id, 20, 0, false, false);
+
+                // 6. get system types
+                FilteredElementCollector systemCollector = new FilteredElementCollector(doc);
+                systemCollector.OfClass(typeof(MEPSystemType));
+
+                // 7. get duct system type
+                MEPSystemType ductSystem = GetSystemTypeByName(doc, "Supply Air");
+
+                // 8. get duct type
+                FilteredElementCollector ductCollector = new FilteredElementCollector(doc);
+                ductCollector.OfClass(typeof(DuctType));
+
+                // 9. create duct
+                Curve curCurve3 = modelCurves[2].GeometryCurve;
+                Duct newDuct = Duct.Create(doc, ductSystem.Id, ductCollector.FirstElementId(),
+                    newLevel.Id, curCurve3.GetEndPoint(0), curCurve3.GetEndPoint(1));
+
+                // 10. get pipe system type
+                MEPSystemType pipeSystem = GetSystemTypeByName(doc, "Domestic Hot Water");
+
+                // 11. get pipe type
+                FilteredElementCollector pipeCollector = new FilteredElementCollector(doc);
+                pipeCollector.OfClass(typeof(PipeType));
+
+                // 12. create pipe
+                Curve curCurve4 = modelCurves[3].GeometryCurve;
+                Pipe newPipe = Pipe.Create(doc, pipeSystem.Id, pipeCollector.FirstElementId(),
+                    newLevel.Id, curCurve4.GetEndPoint(0), curCurve4.GetEndPoint(1));
 
                 t.Commit();
             }
@@ -96,6 +128,41 @@
 
             return Result.Succeeded;
         }
-    }
 
+
+        internal string MyFirstMethod()
+        {
+            return "This is my first method";
+        }
+
+        internal void MySecondMethod()
+        {
+            Debug.Print("This is my second method");
+        }
+
+        internal string MyThirdMethod(string input)
+        {
+            string returnString = $"This is my third method: {input}";
+            return returnString;
+        }
+
+        internal MEPSystemType GetSystemTypeByName(Document doc, string name)
+        {
+            // get all system types
+            FilteredElementCollector systemCollector = new FilteredElementCollector(doc);
+            systemCollector.OfClass(typeof(MEPSystemType));
+
+            // get duct system type
+            foreach (MEPSystemType systemType in systemCollector)
+            {
+                if (systemType.Name == name)
+                {
+                    return systemType;
+                }
+            }
+
+            return null;
+        }
+    }
 }
+    
