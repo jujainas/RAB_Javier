@@ -11,12 +11,33 @@
             Document doc = uidoc.Document;
 
             // Your Module 02 Challenge code goes here
-            // Delete the TaskDialog below and add your code
-            TaskDialog.Show("Module 02 Challenge", "Coming Soon!");
+            // Select Elements
+            List<Element> pickList = uidoc.Selection.PickElementsByRectangle("Select Elements").ToList();
+
+            // Filter elements for curves and Filter curves for Model Curves
+            List<CurveElement> modelCurves = new List<CurveElement>();
+            foreach (Element elem in pickList)
+            {
+                if (elem is CurveElement)
+                {
+                    CurveElement curveElem = elem as CurveElement;
+
+                    if (curveElem.CurveElementType == CurveElementType.ModelCurve)
+                    {
+                        modelCurves.Add(curveElem);
+                    }
+                }
+
+            }
+
+            // 
+
+
+
 
 
             return Result.Succeeded;
-        }
+    }
         internal static PushButtonData GetButtonData()
         {
             // use this method to define the properties for this command in the Revit ribbon
