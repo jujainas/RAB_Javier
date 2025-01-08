@@ -30,7 +30,11 @@
 
             }
 
-            // 
+            // create a transaction to lock the model
+            Transaction t = new Transaction(doc);
+            t.Start("Creating Elements");
+
+            foreach (ModelCurve in modelCurves)
 
 
 
