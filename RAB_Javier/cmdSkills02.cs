@@ -122,11 +122,35 @@ namespace RAB_Javier
                 Pipe newPipe = Pipe.Create(doc, pipeSystem.Id, pipeCollector.FirstElementId(),
                     newLevel.Id, curCurve4.GetEndPoint(0), curCurve4.GetEndPoint(1));
 
-                t.Commit();
+                // 13. switch statement
+                int numberValue = 5;
+                string numberAsString = "";
+
+                switch(numberValue)
+                {
+                    case 0:
+                        numberAsString = "Zero";
+                        break;
+
+                    case 5:
+
+                        numberAsString = "Five";
+                        break;
+
+                    case 10:
+                        numberAsString = "Ten";
+                        break;
+
+                    default:
+                        numberAsString = "Ninety Nine";
+                        break;
+                }
+
+                    t.Commit();
             }
 
 
-            return Result.Succeeded;
+                return Result.Succeeded;
         }
 
 
