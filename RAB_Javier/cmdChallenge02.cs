@@ -1,4 +1,5 @@
-﻿using Autodesk.Revit.DB;
+﻿using System.Xaml.Schema;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
 
@@ -42,17 +43,35 @@ namespace RAB_Javier
             // 4. Get types
             WallType wt1 = GetWallTypeByName(doc, "Storefront");
             WallType wt2 = GetWallTypeByName(doc, "Generic 8\"");
-            MEPBuildingConstruction ductSystem = GetMEPSystemByName(doc, "Supply Air");
-            MEPBuildingConstruction pipeSystem = GetMEPSystemByName(doc, "Domestic Hot Water");
+            MEPSystemType ductSystem = GetMEPSystemByName(doc, "Supply Air");
+            MEPSystemType pipeSystem = GetMEPSystemByName(doc, "Domestic Hot Water");
             DuctType ductType = GetDuctTypeByName(doc, "Default");
             PipeType pipeType = GetPipeTypeByName(doc, "Default");
 
+            // 5.Loop through curve elements
+            using (Transaction t = new Transaction(doc))
+            {
+                t.Start("Create elements");
+                
+                foreach (CurveElement currentCurve in filteredList)
+                {
+                    // 6. get graphicstyle from line
+                    GraphicsStyle currentStyle = currentCurve.LineStyle as GraphicsStyle;
+                    string lineStyleName = currentStyle.Name;
+
+                    // 6.b.get curve geometry
+                    Curve curveGeom = currentCurve.GeometryCurve;
+
+                    // 7. use switch statement to create elements
+
+                }
+
+                t.Commit();
+            }
 
 
 
-            // create a transaction to lock the model
-            Transaction t = new Transaction(doc);
-            t.Start("Creating Elements");
+
 
 
 
@@ -64,24 +83,82 @@ namespace RAB_Javier
             return Result.Succeeded;
         }
 
-        private PipeType GetPipeTypeByName(Document doc, string v)
+        private PipeType GetPipeTypeByName(Document doc, string pipeTypeName)
         {
-            throw new NotImplementedException();
+            FilteredElementCollector pipeCollector = new FilteredElementCollector(doc);
+            pipeCollector.OfClass(typeof(PipeType));
+
+
+            foreach (PipeType curPipeType in pipeCollector)
+            {
+                if (curPipeType.Name == pipeTypeName)
+
+                {
+                    return curPipeType;
+                }
+
+            }
+
+            return null;
         }
 
-        private DuctType GetDuctTypeByName(Document doc, string v)
+        private DuctType GetDuctTypeByName(Document doc, string ductTypeName)
         {
-            throw new NotImplementedException();
+            FilteredElementCollector ductCollector = new FilteredElementCollector(doc);
+            ductCollector.OfClass(typeof(DuctType));
+
+
+            foreach (DuctType curDuctType in ductCollector)
+            {
+                if (curDuctType.Name == ductTypeName)
+
+                {
+                    return curDuctType;
+                }
+
+            }
+
+            return null;
         }
 
-        private MEPBuildingConstruction GetMEPSystemByName(Document doc, string v)
+        private MEPSystemType GetMEPSystemByName(Document doc, string systemTypeName)
         {
-            throw new NotImplementedException();
+            FilteredElementCollector systemCollector = new FilteredElementCollector(doc);
+            systemCollector.OfClass(typeof(MEPSystemType));
+
+
+            foreach (MEPSystemType curSystemType in systemCollector)
+            {
+                if (curSystemType.Name == systemTypeName)
+
+                {
+                    return curSystemType;
+                }
+
+            }
+
+            return null;
         }
 
-        private WallType GetWallTypeByName(Document doc, string v)
+        private WallType GetWallTypeByName(Document doc, string wallTypeName)
         {
-            throw new NotImplementedException();
+            FilteredElementCollector wallCollector = new FilteredElementCollector(doc);
+            //wallCollector.OfCategory(BuiltInCategory.OST_Walls);
+            //wallCollector.WhereElementIsElementType();
+            wallCollector.OfClass(typeof(WallType)); // this line is the same as the 2 previous ones
+
+
+            foreach (WallType curWallType in wallCollector)
+            {
+                if (curWallType.Name == wallTypeName)
+
+                {
+                    return curWallType;
+                }
+
+            }
+
+            return null;
         }
 
         internal static Level GetLevelByName(Document doc, string levelName)
