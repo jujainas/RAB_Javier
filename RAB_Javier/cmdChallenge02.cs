@@ -47,6 +47,7 @@ namespace RAB_Javier
             MEPSystemType pipeSystem = GetMEPSystemByName(doc, "Domestic Hot Water");
             DuctType ductType = GetDuctTypeByName(doc, "Default");
             PipeType pipeType = GetPipeTypeByName(doc, "Default");
+            
 
             // 5.Loop through curve elements
             using (Transaction t = new Transaction(doc))
@@ -63,6 +64,27 @@ namespace RAB_Javier
                     Curve curveGeom = currentCurve.GeometryCurve;
 
                     // 7. use switch statement to create elements
+                    switch (lineStyleName)
+                    {
+                        case "A-GLAZ":
+                            Wall wall1 = Wall.Create(doc, curveGeom, wt1.Id, wantedLevel.Id, 20, 0, false, false);
+                            break;
+
+                        case "A-WALL":
+                            Wall wall2 = Wall.Create(doc, curveGeom, wt2.Id, wantedLevel.Id, 20, 0, false, false);
+                            break;
+
+                        case "M-DUCT":
+                            Duct duct = Duct.Create(doc, ductSystem.Id, ductType.Id, wantedLevel.Id, curveGeom.GetEndPoint(0), curveGeom.GetEndPoint(1));
+                            break;
+
+                        case "P-PIPE":
+                            Pipe pipe = Pipe.Create(doc, pipeSystem.Id, pipeType.Id, wantedLevel.Id, curveGeom.GetEndPoint(0), curveGeom.GetEndPoint(1));
+                            break;
+
+                        default:
+                            break;
+                    }
 
                 }
 
