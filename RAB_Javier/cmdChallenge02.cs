@@ -42,7 +42,7 @@ namespace RAB_Javier
 
             // 4. Get types
             WallType wt1 = GetWallTypeByName(doc, "Storefront");
-            WallType wt2 = GetWallTypeByName(doc, "Generic 8\"");
+            WallType wt2 = GetWallTypeByName(doc, "Generic - 8\"");
             MEPSystemType ductSystem = GetMEPSystemByName(doc, "Supply Air");
             MEPSystemType pipeSystem = GetMEPSystemByName(doc, "Domestic Hot Water");
             DuctType ductType = GetDuctTypeByName(doc, "Default");
