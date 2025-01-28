@@ -91,17 +91,6 @@ namespace RAB_Javier
                 t.Commit();
             }
 
-
-
-
-
-
-
-
-
-
-
-
             return Result.Succeeded;
         }
 
