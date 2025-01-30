@@ -1,4 +1,6 @@
 ﻿using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.DB.Structure;
+using System.Runtime.CompilerServices;
 
 namespace RAB_Javier
 {
@@ -38,13 +40,121 @@ namespace RAB_Javier
             string roomName = curRoom.Name;
 
             // 7.a check room name
-            if(roomName.Contains("Office"))
+            if (roomName.Contains("Office"))
             {
                 TaskDialog.Show("Test", "Found the room!");
             }
 
+            // 7.b get room point
+            Location roomLocation = curRoom.Location;
+            LocationPoint roomLocPt = roomLocation as LocationPoint;
+            XYZ roomPoint = roomLocPt.Point;
 
+            using (Transaction t = new Transaction(doc))
+            {
+                t.Start("Insert families into rooms");
+                // 8. insert families
+                FamilySymbol curFamSymbol = GetFamilySymbolByName(doc, "Desk", "Large");
+                curFamSymbol.Activate(); //this line of code has to be inside the transaction
+
+                foreach (Room curRoom2 in roomCollector)
+                {
+                    LocationPoint loc = curRoom2.Location as LocationPoint;
+
+                    FamilyInstance curFamInstance = doc.Create.NewFamilyInstance(loc.Point, curFamSymbol, StructuralType.NonStructural);
+
+                    string department = GetParameterValueAsString(curRoom2, "Department");
+                    double area = GetParameterValueAsDouble (curRoom2, BuiltInParameter.ROOM_AREA);
+                    double area2 = GetParameterValueAsDouble (curRoom, "Area")
+
+                    SetParameterValue(curRoom2, "Department", "Architecture");
+                }
+                t.Commit();
+            }
             return Result.Succeeded;
+        }
+        private void SetParameterValue (Element curElem, string paramName, string value)
+        {
+            Parameter curParam = curElem.LookupParameter(paramName);
+
+            if (curParam != null)
+            {
+               curParam.Set(value);
+            }
+            
+        }
+
+        private void SetParameterValue(Element curElem, string paramName, int value)
+        {
+            Parameter curParam = curElem.LookupParameter(paramName);
+
+            if (curParam != null)
+            {
+                curParam.Set(value);
+            }
+        }
+        private string GetParameterValueAsString(Element curElem, string paramName)
+        {
+            Parameter curParam = curElem.LookupParameter (paramName);
+            if (curParam != null)
+            {
+                return curParam.AsString();
+            }
+            else
+                return "";
+        }
+
+        private string GetParameterValueAsString(Element curElem, BuiltInParameter bip)
+        {
+            Parameter curParam = curElem.get_Parameter(bip);
+            if (curParam != null)
+            {
+                return curParam.AsString();
+            }
+            else
+                return "";
+        }
+
+        private double GetParameterValueAsDouble(Element curElem, string paramName)
+        {
+            Parameter curParam = curElem.LookupParameter(paramName);
+            if (curParam != null)
+            {
+                return curParam.AsDouble();
+            }
+            else
+                return 0;
+        }
+
+        private double GetParameterValueAsDouble(Element curElem, BuiltInParameter bip)
+        {
+            Parameter curParam = curElem.get_Parameter(bip);
+            if (curParam != null)
+            {
+                return curParam.AsDouble();
+            }
+            else
+                return 0;
+        }
+        private FamilySymbol GetFamilySymbolByName(Document doc, string familyName, string familySymbolName)
+        {
+            FilteredElementCollector collector = new FilteredElementCollector (doc);
+            collector.OfClass(typeof(FamilySymbol));
+
+            foreach (FamilySymbol curSymbol in collector)
+            {
+                if (curSymbol.FamilyName == familyName)
+                {
+                    if (curSymbol.Name == familySymbolName)
+                    {
+                        return curSymbol;
+                    }
+                }
+
+            }
+
+            return null;
+
         }
     }
 
