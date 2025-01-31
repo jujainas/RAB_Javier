@@ -65,7 +65,7 @@ namespace RAB_Javier
 
                     string department = GetParameterValueAsString(curRoom2, "Department");
                     double area = GetParameterValueAsDouble (curRoom2, BuiltInParameter.ROOM_AREA);
-                    double area2 = GetParameterValueAsDouble (curRoom, "Area")
+                    double area2 = GetParameterValueAsDouble(curRoom, "Area");
 
                     SetParameterValue(curRoom2, "Department", "Architecture");
                 }

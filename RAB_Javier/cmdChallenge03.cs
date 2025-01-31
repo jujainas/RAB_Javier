@@ -1,4 +1,7 @@
-﻿namespace RAB_Javier
+﻿using System.Net;
+using System.Xml.Linq;
+
+namespace RAB_Javier
 {
     [Transaction(TransactionMode.Manual)]
     public class cmdChallenge03 : IExternalCommand
@@ -12,11 +15,13 @@
 
             // Your Module 03 Challenge code goes here
             // Delete the TaskDialog below and add your code
-            TaskDialog.Show("Module 03 Challenge", "Coming Soon!");
+
+
 
 
             return Result.Succeeded;
         }
+
         internal static PushButtonData GetButtonData()
         {
             // use this method to define the properties for this command in the Revit ribbon
@@ -35,4 +40,23 @@
         }
     }
 
+
+    //1. Create class
+    public class movingList
+    {
+        public string RoomName { get; set; }
+        public string FamilyName { get; set; }
+        public string FamilyType { get; set; }
+        public int Quantity { get; set; }
+
+        //2. add constructor to class
+        public movingList(string _roomName, string _familyName, string _familytype, int _quantity)
+
+        {
+            RoomName = _roomName;
+            FamilyName = _familyName;
+            FamilyType = _familytype;
+            Quantity = _quantity;
+        }
+    }
 }
