@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Xml.Linq;
+using Autodesk.Revit.DB.Architecture;
 
 namespace RAB_Javier
 {
@@ -13,13 +14,87 @@ namespace RAB_Javier
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
 
-            // Your Module 03 Challenge code goes here
-            // Delete the TaskDialog below and add your code
+            // 3. define the class data
+            List<movingList> furnitureList = GetRoomFurniture();
+
+            // 4. get all the rooms
+            FilteredElementCollector roomCollector = new FilteredElementCollector(doc);
+            roomCollector.OfCategory(BuiltInCategory.OST_Rooms);
+
+            // 5. loop through the rooms and insert furniture
+            using (Transaction t = new Transaction(doc))
+            {
+                t.Start("Move in");
+                foreach (Room curRoom in roomCollector)
+                {
+                    int counter = 0;
+
+                    // 5.a get room data
+                    string roomName = curRoom.Name;
+                    LocationPoint roomLoc = curRoom.Location as LocationPoint;
+                    XYZ roomPoint = roomLoc.Point;
+
+                    // 5.b loop through furnitureList and find matching room
+                    foreach (movingList curRoomFur in furnitureList)
+                    {
+                        if(roomName.Contains(curRoomFur.RoomName))
+                        {
+                            // 5.c get family symbol and activate
+                        }
+                    }
+
+                }
+
+
+
+
+
+                t.Commit();
+            }
+
+
+
 
 
 
 
             return Result.Succeeded;
+        }
+
+        // 3. Define a method 
+        private List<movingList> GetRoomFurniture()
+        {
+            // Create a list to hold movingList instances
+            List<movingList> furnitureList = new List<movingList>();
+
+            // Add instances
+            furnitureList.Add(new movingList("Classroom", "Desk", "Teacher", 1));
+            furnitureList.Add(new movingList("Classroom", "Desk", "Student", 6));
+            furnitureList.Add(new movingList("Classroom", "Chair-Desk", "Default", 7));
+            furnitureList.Add(new movingList("Classroom", "Shelf", "Large", 1));
+            furnitureList.Add(new movingList("Office", "Desk", "Teacher", 1));
+            furnitureList.Add(new movingList("Office", "Chair-Executive", "Default", 1));
+            furnitureList.Add(new movingList("Office", "Shelf", "Small", 1));
+            furnitureList.Add(new movingList("Office", "Chair-Task", "Default", 1));
+            furnitureList.Add(new movingList("VR Lab", "Table-Rectangular", "Small", 1));
+            furnitureList.Add(new movingList("VR Lab", "Table-Rectangular", "Large", 8));
+            furnitureList.Add(new movingList("VR Lab", "Chair-Task", "Default", 9));
+            furnitureList.Add(new movingList("Computer Lab", "Desk", "Teacher", 1));
+            furnitureList.Add(new movingList("Computer Lab", "Desk", "Student", 10));
+            furnitureList.Add(new movingList("Computer Lab", "Chair-Desk", "Default", 11));
+            furnitureList.Add(new movingList("Computer Lab", "Shelf", "Large", 2));
+            furnitureList.Add(new movingList("Student Lounge", "Sofa", "Large", 2));
+            furnitureList.Add(new movingList("Student Lounge", "Table-Coffee", "Square", 2));
+            furnitureList.Add(new movingList("Teacher Lounge", "Sofa", "Small", 2));
+            furnitureList.Add(new movingList("Teacher Lounge", "Table-Coffee", "Large", 1));
+            furnitureList.Add(new movingList("Waiting", "Chair-Waiting", "Default", 2));
+            furnitureList.Add(new movingList("Waiting", "Table-Coffee", "Large", 1));
+
+            return furnitureList;
+
+
+
+
         }
 
         internal static PushButtonData GetButtonData()
