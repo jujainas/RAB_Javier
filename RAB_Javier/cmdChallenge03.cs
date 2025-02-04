@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Xml.Linq;
 using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.DB.Structure;
 
 namespace RAB_Javier
 {
@@ -13,6 +14,8 @@ namespace RAB_Javier
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
+
+            int totalCounter = 0;
 
             // 3. define the class data
             List<movingList> furnitureList = GetRoomFurniture();
@@ -27,7 +30,7 @@ namespace RAB_Javier
                 t.Start("Move in");
                 foreach (Room curRoom in roomCollector)
                 {
-                    int counter = 0;
+                    int roomCounter = 0;
 
                     // 5.a get room data
                     string roomName = curRoom.Name;
@@ -40,25 +43,56 @@ namespace RAB_Javier
                         if(roomName.Contains(curRoomFur.RoomName))
                         {
                             // 5.c get family symbol and activate
+                            FamilySymbol curFS = GetFamilySymbol(doc, curRoomFur.FamilyName, curRoomFur.FamilyType);
+
+                            // 5.d check for null
+                            if (curFS == null)
+                            {
+                                TaskDialog.Show("Error", "Could not find specified family. Check your family data.");
+                                continue;
+                            }
+
+                            curFS.Activate();
+
+                            // 5.e loop through quantity number and insert families
+                            for (int i = 1; i <= curRoomFur.Quantity; i++)
+                            {
+                                FamilyInstance curFI = doc.Create.NewFamilyInstance(roomPoint, curFS, StructuralType.NonStructural);
+                                roomCounter++;
+                                totalCounter++;
+                            }
                         }
                     }
 
+                    // 6. Update furniture count for room
+                    Parameter roomCount = curRoom.LookupParameter("Furniture Count");
+
+                    if (roomCount != null)
+                    {
+                        roomCount.Set(roomCounter);
+                    }
                 }
-
-
-
-
 
                 t.Commit();
             }
 
-
-
-
-
-
+            // 7. alert user
+            TaskDialog.Show("Complete", $"You moved {totalCounter} pieces of furniture in the building. Great work!");
 
             return Result.Succeeded;
+        }
+
+        private FamilySymbol GetFamilySymbol(Document doc, string familyName, string familyType)
+        {
+            FilteredElementCollector collector = new FilteredElementCollector(doc);
+            collector.OfClass(typeof(FamilySymbol));
+
+            foreach (FamilySymbol curFS in collector)
+            {
+                if (curFS.FamilyName == familyName && curFS.Name == familyType)
+                    return curFS;
+            }
+            return null;
         }
 
         // 3. Define a method 
@@ -91,10 +125,6 @@ namespace RAB_Javier
             furnitureList.Add(new movingList("Waiting", "Table-Coffee", "Large", 1));
 
             return furnitureList;
-
-
-
-
         }
 
         internal static PushButtonData GetButtonData()
