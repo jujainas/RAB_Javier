@@ -41,6 +41,17 @@ namespace RAB_Javier
             // 2.b Create/Get panel method - safe method
             RibbonPanel panel4 = CreateGetPanel (application, tabName, panelName1);
 
+            // 3 Create button data
+            PushButtonData buttonData1 = new PushButtonData("button1","Command 1",
+                Assembly.GetExecutingAssembly.Loction,"RAB_Javier.cmdSkills04");
+
+            PushButtonData buttonData2 = new PushButtonData("button2", "Buttom\rCommand 2",
+               Assembly.GetExecutingAssembly.Loction, "RAB_Javier.cmdSkills04");
+            // Adding a \r makes the text to be on another line below
+
+            // 4 add tooltips
+            buttonData1.ToolTip = "This is Command 1";
+            buttonData2.ToolTip = "This is Command 2";
 
 
 
@@ -64,7 +75,7 @@ namespace RAB_Javier
             //panel not found, so create it
             RibbonPanel returnPanel = application.CreateRibbonPanel(tabName, panelName1);
             return returnPanel;
-            //return.app.CreateRibbonPanel(tabName, panelName1); This is the same as what it is above
+            //return.application.CreateRibbonPanel(tabName, panelName1); This is the same as what it is above
 
         }
 
