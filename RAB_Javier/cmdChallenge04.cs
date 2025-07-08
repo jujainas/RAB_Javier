@@ -14,6 +14,24 @@
             // Delete the TaskDialog below and add your code
             TaskDialog.Show("Module 04 Challenge", "Coming Soon!");
 
+            //empieza a borrar desde aqui
+            // 1. Select Elements
+            TaskDialog.Show("Select Elements", "Select Model Lines to convert to Revit Elements");
+            List<Element> pickList = uidoc.Selection.PickElementsByRectangle("Select Elements").ToList();
+
+            // 2. Filter elements for curves and Filter curves for Model Curves
+            List<CurveElement> filteredList = new List<CurveElement>();
+            foreach (Element elem in pickList)
+            {
+                if (elem is CurveElement curveElement)
+            }
+            
+
+
+
+
+            // terminar de borrar aqui
+
 
             return Result.Succeeded;
         }
