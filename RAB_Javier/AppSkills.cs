@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace RAB_Javier
 {
@@ -41,17 +42,21 @@ namespace RAB_Javier
             // 2.b Create/Get panel method - safe method
             RibbonPanel panel4 = CreateGetPanel (application, tabName, panelName1);
 
-            // 3 Create button data
-            PushButtonData buttonData1 = new PushButtonData("button1","Command 1",
-                Assembly.GetExecutingAssembly.Loction,"RAB_Javier.cmdSkills04");
+            // 3. Create button data
+            PushButtonData buttonData1 = new PushButtonData("button1","Command1",
+                Assembly.GetExecutingAssembly().Location,"RAB_Javier.Command1");
 
-            PushButtonData buttonData2 = new PushButtonData("button2", "Buttom\rCommand 2",
-               Assembly.GetExecutingAssembly.Loction, "RAB_Javier.cmdSkills04");
+            PushButtonData buttonData2 = new PushButtonData("button2", "Buttom\rCommand2",
+               Assembly.GetExecutingAssembly().Location, "RAB_Javier.Command2");
             // Adding a \r makes the text to be on another line below
 
-            // 4 add tooltips
+            // 4. add tooltips
             buttonData1.ToolTip = "This is Command 1";
             buttonData2.ToolTip = "This is Command 2";
+
+            //5. Add images
+            buttonData1.Image = ConvertToImageSource(Properties.Resources.);
+
 
 
 
@@ -83,5 +88,22 @@ namespace RAB_Javier
         {
             return Result.Succeeded;
         }
+
+        public BitmapImage ConvertToImageSource(byte[] imageData)
+        {
+            using (MemoryStream mem = new MemoryStream(imageData))
+            {
+                mem.Position = 0;
+                BitmapImage bmi = new BitmapImage();
+                bmi.BeginInit();
+                bmi.StreamSource = mem;
+                bmi.CacheOption = BitmapCacheOption.OnLoad;
+                bmi.EndInit();
+
+                return bmi;
+            }
+        }
+
+
     }
 }
