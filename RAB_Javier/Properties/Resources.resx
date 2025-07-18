@@ -118,17 +118,17 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Blue 16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Blue 16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Blue16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Blue16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Blue 32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Blue 32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Blue32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Blue32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Green 16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Green 16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Green16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Green16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Green 32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Green 32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Green32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Green32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Module01" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Module01.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -141,11 +141,5 @@
   </data>
   <data name="Module04" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Module04.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Yellow 16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Yellow 16.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Yellow 32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Yellow 32.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

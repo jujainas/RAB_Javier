@@ -32,8 +32,10 @@ namespace RAB_Javier
             string panelName3 = "Test Panel 3";
 
             RibbonPanel panel = application.CreateRibbonPanel(tabName, panelName1);
-            RibbonPanel panel2 = application.CreateRibbonPanel(panelName2);
-            RibbonPanel panel3 = application.CreateRibbonPanel("Architecture", panelName3);
+            RibbonPanel panel2 = application.CreateRibbonPanel(tabName,panelName2);
+            /*RibbonPanel panel3 = application.CreateRibbonPanel("Architecture", panelName3);
+            it does not allow you to create a panel in a tab that are not custom ,
+            so the above line will throw an error if the tab is not custom*/
 
             // 2.a Get existing panel
             List<RibbonPanel> panelList = application.GetRibbonPanels();
@@ -55,10 +57,14 @@ namespace RAB_Javier
             buttonData2.ToolTip = "This is Command 2";
 
             //5. Add images
-            buttonData1.Image = ConvertToImageSource(Properties.Resources.);
+            buttonData1.Image = ConvertToImageSource(Properties.Resources.Blue16);
+            buttonData1.LargeImage = ConvertToImageSource(Properties.Resources.Blue32);
+            buttonData2.Image = ConvertToImageSource(Properties.Resources.Green16);
+            buttonData2.LargeImage = ConvertToImageSource(Properties.Resources.Green32);
 
-
-
+            //6. Create push buttons
+            PushButton pushButton1 = panel.AddItem(buttonData1) as PushButton;
+            PushButton pushButton2 = panel2.AddItem(buttonData2) as PushButton;
 
 
 
