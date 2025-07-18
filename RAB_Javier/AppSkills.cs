@@ -42,7 +42,6 @@ namespace RAB_Javier
             // 2.b Create/Get panel method - safe method
             RibbonPanel panel4 = CreateGetPanel (application, tabName, panelName1);
 
-<<<<<<< HEAD
             // 3. Create button data
             PushButtonData buttonData1 = new PushButtonData("button1","Command1",
                 Assembly.GetExecutingAssembly().Location,"RAB_Javier.Command1");
