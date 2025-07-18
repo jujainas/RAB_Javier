@@ -48,18 +48,6 @@ namespace RAB_Javier
 
             PushButtonData buttonData2 = new PushButtonData("button2", "Buttom\rCommand2",
                Assembly.GetExecutingAssembly().Location, "RAB_Javier.Command2");
-<<<<<<< HEAD
-=======
-            // 3 Create button data
-            PushButtonData buttonData1 = new PushButtonData("button1","Command 1",
-                Assembly.GetExecutingAssembly().Location,"RAB_Javier.cmdSkills04");
-
-            PushButtonData buttonData2 = new PushButtonData("button2", "Buttom\rCommand 2",
-               Assembly.GetExecutingAssembly().Location, "RAB_Javier.cmdSkills04");
->>>>>>> from home
-=======
-
->>>>>>> last one after rebase
             // Adding a \r makes the text to be on another line below
 
             // 4. add tooltips
@@ -115,25 +103,6 @@ namespace RAB_Javier
         {
             return Result.Succeeded;
         }
-
-<<<<<<< HEAD
-        public BitmapImage ConvertToImageSource(byte[] imageData)
-        {
-            using (MemoryStream mem = new MemoryStream(imageData))
-            {
-                mem.Position = 0;
-                BitmapImage bmi = new BitmapImage();
-                bmi.BeginInit();
-                bmi.StreamSource = mem;
-                bmi.CacheOption = BitmapCacheOption.OnLoad;
-                bmi.EndInit();
-
-                return bmi;
-            }
-        }
-
-=======
->>>>>>> last one after rebase
 
     }
 }
