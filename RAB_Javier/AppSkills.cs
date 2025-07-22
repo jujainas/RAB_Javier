@@ -56,15 +56,42 @@ namespace RAB_Javier
             buttonData1.ToolTip = "This is Command 1";
             buttonData2.ToolTip = "This is Command 2";
 
-            //5. Add images
+            // 5. Add images
             buttonData1.Image = ConvertToImageSource(Properties.Resources.Blue16);
             buttonData1.LargeImage = ConvertToImageSource(Properties.Resources.Blue32);
             buttonData2.Image = ConvertToImageSource(Properties.Resources.Green16);
             buttonData2.LargeImage = ConvertToImageSource(Properties.Resources.Green32);
 
-            //6. Create push buttons
-            PushButton pushButton1 = panel.AddItem(buttonData1) as PushButton;
-            PushButton pushButton2 = panel2.AddItem(buttonData2) as PushButton;
+            // 6. Create push buttons
+            //PushButton pushButton1 = panel.AddItem(buttonData1) as PushButton;
+            //PushButton pushButton2 = panel2.AddItem(buttonData2) as PushButton;
+
+            // 7. Add stackable buttons
+            //panel.AddStackedItems(buttonData1, buttonData2);
+
+            // 8. Add split button
+            //SplitButtonData splitButtonData = new SplitButtonData("splitButton1", "Split\rButton");
+            //SplitButton splitButton = panel.AddItem(splitButtonData) as SplitButton;
+            //splitButton.AddPushButton(buttonData1);
+            //splitButton.AddPushButton(buttonData2);
+
+            // 9. Add pull down button
+            PulldownButtonData pulldownButtonData = new PulldownButtonData("pulldownbutton1", "Pulldown\rButton");
+            PulldownButton pulldownButton = panel.AddItem(pulldownButtonData) as PulldownButton;
+            pulldownButton.AddPushButton(buttonData1);
+            pulldownButton.AddPushButton(buttonData2);
+            pulldownButtonData.LargeImage= ConvertToImageSource(Properties.Resources.Blue32);
+
+            // 10. Other items
+            // 10.a Add a separator between tools. The vertical line
+            panel.AddSeparator();
+
+            // 10.b Add a slideout. For this and the separator it matters where you place it in the code. As it s now, it will be at the end of the panel.
+            panel.AddSlideOut();
+
+
+
+
 
 
 
